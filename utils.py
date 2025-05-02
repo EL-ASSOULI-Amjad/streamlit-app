@@ -95,7 +95,7 @@ def retrieve_data(item): # function to retrieve data (and comments separatly for
                 "negative_percentage": round(negative_percentage, 2)
             })
             
-        def custom_serializer(obj):
+        def custom_serializer(obj): # To process objects not recognized by Json (dates, emojis ...)
             if isinstance(obj, datetime):
                 return obj.isoformat()
             raise TypeError(f"Type {obj.__class__.__name__} not serializable")
