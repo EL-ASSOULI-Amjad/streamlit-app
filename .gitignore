@@ -1,0 +1,3 @@
+appvenv/
+__pycache__/
+*.pyc
