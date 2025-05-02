@@ -44,11 +44,7 @@ def retrieve_data(item):
             genre = app_details.get('genre')
             installs = ''.join(filter(str.isdigit, app_details.get('installs', '')))
             installs_number = int(installs) if installs else 0
-            release_date = select_app['released'].iloc[0]
-        formatted_date = release_date.strftime('%B %d, %Y') if not pd.isnull(release_date) else "Unknown"
-        downloads = select_app['downloads'].iloc[0]
-        formatted_downloads = f"{downloads:,}"
-
+        
             try:
                 sentiments = sentiment_pipeline(review_texts)
                 confidences = []
