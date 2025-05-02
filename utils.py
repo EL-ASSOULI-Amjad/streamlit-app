@@ -35,7 +35,7 @@ def retrieve_data(item):
             title = app_details.get('title')
             released = app_details.get('released')
             summary = app_details.get('summary')
-            overall_rating = round(app_details.get("score"), 2)
+            overall_rating = app_details.get("score")
             ratings_number = app_details.get('ratings')
             app_reviews = app_details.get('reviews')
             price = app_details.get('price')
@@ -44,10 +44,10 @@ def retrieve_data(item):
             genre = app_details.get('genre')
             installs = ''.join(filter(str.isdigit, app_details.get('installs', '')))
             installs_number = int(installs) if installs else 0
-            release_date = released.iloc[0]
-            formatted_date = release_date.strftime('%B %d, %Y') if not pd.isnull(release_date) else "Unknown"
-            downloads = installs_number.iloc[0]
-            formatted_downloads = f"{downloads:,}"
+            release_date = select_app['released'].iloc[0]
+        formatted_date = release_date.strftime('%B %d, %Y') if not pd.isnull(release_date) else "Unknown"
+        downloads = select_app['downloads'].iloc[0]
+        formatted_downloads = f"{downloads:,}"
 
             try:
                 sentiments = sentiment_pipeline(review_texts)
@@ -82,9 +82,9 @@ def retrieve_data(item):
 
             data.append({
                 "title": title,
-                "downloads": formatted_downloads,
+                "downloads": installs_number,
                 "overall rating": overall_rating,
-                "released": formatted_date,
+                "released": released,
                 "summary": summary,
                 "reviews": app_reviews,
                 "ratings": ratings_number,
