@@ -1,4 +1,6 @@
+#importing manually the modules in case 'utils.py' fails
 import streamlit as st
+from transformers import pipeline
 import pandas as pd
 import plotly.express as px
 from wordcloud import WordCloud
@@ -92,7 +94,7 @@ try:
                                         title="Sentiment Distribution of reviews across apps",
                                         color_discrete_sequence=px.colors.qualitative.Set2,
                                         labels={'Sentiment': 'Sentiment Type', 'Count': 'Number of Reviews'},
-                                        hole=0.3)  # Optional: add a hole to create a donut chart
+                                        hole=0.3)
 
             # Show percentage on the chart
             fig_sentiment_pie.update_traces(textinfo='percent+label', textfont_size=14)
@@ -100,8 +102,8 @@ try:
             st.plotly_chart(fig_sentiment_pie, use_container_width=True)
 
         with col2:
-            # Bar chart: Average confidence per app (using overall rating as a proxy for sentiment confidence)
-            # Compute mean confidence per app and reset index
+            # Bar chart: Average confidence per app 
+            # Calculating mean confidence per app
             confidence_by_app = (
                 filtered_comments
                 .groupby("title")["confidence"]
@@ -109,7 +111,7 @@ try:
                 .reset_index()
             )
 
-            # Plot using correct DataFrame
+            
             fig_sentiment_bar = px.bar(
                 confidence_by_app,
                 x='title',

@@ -1,6 +1,6 @@
 # importing the required modules
 import json
-from transformers import pipeline
+from transformers import pipeline # module for sentiment detecttion
 from google_play_scraper import search, app, Sort  
 from google_play_scraper import reviews as gp_reviews, Sort
 from datetime import datetime
@@ -11,9 +11,9 @@ import numpy as np
 # initialize the sentiment analysis pipeline
 sentiment_pipeline = pipeline("sentiment-analysis")
 
-def retrieve_data(item):
+def retrieve_data(item): # function to retrieve data (and comments separatly for later)
     try:
-        apps = search(item, n_hits=20)
+        apps = search(item, n_hits=20) # limited the search for 20 apps
         if not apps:
             st.warning(f"No apps found for search term: {item}")
             return None
@@ -29,9 +29,10 @@ def retrieve_data(item):
                 lang='en',
                 country='us',
                 sort=Sort.NEWEST,
-                count=20
+                count=20 # limited the search for 20 comments
             )
             review_texts = [review['content'] for review in app_reviews_data]
+            # what's inside of .get('column_name') is the columns of the 'raw' data that we get with the google-play-scraper module
             title = app_details.get('title')
             released = app_details.get('released')
             summary = app_details.get('summary')
@@ -48,9 +49,9 @@ def retrieve_data(item):
             try:
                 sentiments = sentiment_pipeline(review_texts)
                 confidences = []
-                sentiment_counts = {"POSITIVE": 0, "NEGATIVE": 0}
+                sentiment_counts = {"POSITIVE": 0, "NEGATIVE": 0} # initialize count of POS and NEG reviews
 
-
+                # Creating a table separatly for comments for later 'Sentiment Analysis'
                 for review_text, sentiment in zip(review_texts, sentiments):
                     sentiment_label = sentiment['label']
                     reviews_table.append({
@@ -76,6 +77,7 @@ def retrieve_data(item):
             positive_percentage = (sentiment_counts["POSITIVE"] / total_reviews) * 100 if total_reviews > 0 else 0
             negative_percentage = (sentiment_counts["NEGATIVE"] / total_reviews) * 100 if total_reviews > 0 else 0
 
+            # This is the main table which will conduct the 'Market Overview'
             data.append({
                 "title": title,
                 "downloads": installs_number,
@@ -116,11 +118,12 @@ def retrieve_data(item):
         st.error(f"Error retrieving data: {str(e)}")
         return None
 
+#showing the data table
 def show_data(item):
     df = pd.read_csv(f'{item}.csv')
     st.write(f"Displaying data for: {item}")
     st.dataframe(df)
-
+#showing the comments table separatly
 def show_sentiment_analysis(item):
     try:
         df_comments = pd.read_csv(f"{item}_comments.csv")

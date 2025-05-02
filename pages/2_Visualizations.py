@@ -1,3 +1,4 @@
+#importing manually the modules in case 'utils.py' fails
 import streamlit as st
 import pandas as pd
 import plotly.express as px
@@ -167,13 +168,13 @@ try:
         else:
             st.warning("No title information available for selected apps")
 
-
+    # Word cloud based on the apps
     with tab3:
         st.subheader("☁️ Description Word Cloud")
         all_text = ' '.join(filtered_df['summary'].dropna())
         wordcloud = WordCloud(width=800, height=400, background_color='white').generate(all_text)
         st.image(wordcloud.to_array(), use_container_width=True)
-
+    # selecting an app to analyze it separatly
     with tab4:
         st.subheader("ℹ️ Show info about a specific app")
         all_apps = sorted(set([app for sublist in df['title'].dropna().str.split(', ') for app in sublist]))
