@@ -172,7 +172,7 @@ try:
         st.subheader("☁️ Description Word Cloud")
         all_text = ' '.join(filtered_df['summary'].dropna())
         wordcloud = WordCloud(width=800, height=400, background_color='white').generate(all_text)
-        st.image(wordcloud.to_array(), use_column_width=True)
+        st.image(wordcloud.to_array(), use_container_width=True)
 
     with tab4:
         st.subheader("ℹ️ Show info about a specific app")
