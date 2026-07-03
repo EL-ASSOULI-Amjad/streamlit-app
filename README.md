@@ -6,7 +6,9 @@ this is a Streamlit app that searches the Google Play Store for a keyword, pulls
 ![Streamlit](https://img.shields.io/badge/streamlit-multipage_app-FF4B4B)
 ![Transformers](https://img.shields.io/badge/NLP-transformers%20%2B%20torch-yellow)
 
-<!-- TODO: add demo GIF here — capture: (1) typing a search term like "note taking ai" on the Retrieving page, (2) the resulting data table + sentiment table appearing, (3) a quick tab-through of the Visualizations page (bar chart, word cloud) and the Sentiment Analysis pie/bar charts. -->
+<p align="center">
+  <img src="assets/sentiment-analysis-dashboard.png" width="600" alt="Sentiment Analysis page: distribution pie chart and per-app confidence bar chart" />
+</p>
 
 ## Table of contents
 
@@ -146,6 +148,28 @@ Illustrative row from the per-app output (`utils.py` `retrieve_data`, field name
   "negative_percentage": 15.0
 }
 ```
+
+### Screenshots
+
+**Retrieving page** — search input with live autocomplete:
+
+<img src="assets/retrieving-search.png" width="600" alt="Retrieving page with search input and autocomplete suggestions" />
+
+**Results table** — one row per matching app:
+
+<img src="assets/retrieving-results-table.png" width="600" alt="Results table for a search term, showing title, downloads, rating, release date, and summary" />
+
+**Sentiment table** — rendered on the Retrieving page immediately after a search, one row per review:
+
+<img src="assets/retrieving-sentiment-preview.png" width="600" alt="Per-review sentiment table shown right after retrieving data" />
+
+**Visualizations — Market Overview tab**:
+
+<img src="assets/visualizations-market-overview.png" width="600" alt="Market Overview tab: average rating, average downloads, percentage of free apps" />
+
+**Visualizations — Trends tab**:
+
+<img src="assets/visualizations-genre-trends.png" width="600" alt="Number of apps per genre over time, stacked area chart" />
 
 ## Project structure
 
